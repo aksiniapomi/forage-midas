@@ -1,12 +1,14 @@
+//the 'box/parcel' data format
+
 package com.jpmc.midascore.foundation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true) //if the json includes extra fields that the class doesnt have, dont crush
 public class Transaction {
-    private long senderId;
-    private long recipientId;
-    private float amount;
+    private long senderId; //who sent the money
+    private long recipientId; //who receives the money
+    private float amount; //how much money
 
     public Transaction() {
     }
