@@ -1,4 +1,6 @@
 package com.jpmc.midascore;
+import com.jpmc.midascore.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -22,6 +24,9 @@ public class TaskThreeTests {
 
     @Autowired
     private FileLoader fileLoader;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     void task_three_verifier() throws InterruptedException {
