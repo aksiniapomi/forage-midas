@@ -41,15 +41,23 @@ public class TransactionService {
 
         if (sender.getBalance() < amount) return;
 
-        //Call incentive API after transaction is valid
-        Incentive incentiveObj = restTemplate.postForObject(
-                "http://localhost:8080/incentive",
-                tx,
-                Incentive.class
-        );
+        // Call incentive API AFTER transaction is valid (safe fallback to 0)
+        float incentive = 0f;
+        try {
+            Incentive incentiveObj = restTemplate.postForObject(
+                    "http://localhost:8080/incentive",
+                    tx,
+                    Incentive.class
+            );
+            if (incentiveObj != null) {
+                incentive = incentiveObj.getAmount();
+            }
+        } catch (Exception e) {
+            // Incentive service unavailable / wrong port / refused connection
+            // -> treat incentive as 0 so processing still completes
 
-        float incentive = (incentiveObj == null) ? 0f : incentiveObj.getAmount();
-
+            System.out.println("Incentive call failed: " + e.getMessage());
+        }
         // update balances
         sender.setBalance(sender.getBalance() - amount);
         recipient.setBalance(recipient.getBalance() + amount + incentive);

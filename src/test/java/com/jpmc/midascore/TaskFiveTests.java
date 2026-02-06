@@ -11,7 +11,8 @@ import org.springframework.test.annotation.DirtiesContext;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext
-@EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
+//@EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
+@EmbeddedKafka(partitions = 1)
 public class TaskFiveTests {
     static final Logger logger = LoggerFactory.getLogger(TaskFiveTests.class);
 
@@ -26,7 +27,6 @@ public class TaskFiveTests {
 
     @Autowired
     private BalanceQuerier balanceQuerier;
-
 
     @Test
     void task_five_verifier() throws InterruptedException {
